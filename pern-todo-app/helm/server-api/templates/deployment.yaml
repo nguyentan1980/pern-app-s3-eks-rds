@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels: {{ include "common.labels" . | nindent 6 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {{ include "common.labels" . | nindent 8 }}
+  template:
+    metadata:
+      labels: {{ include "common.labels" . | nindent 10 }}
+    spec:
+      containers:
+        - name: {{ .Release.Name }}
+          image: {{ .Values.image }}
+          ports:
+          - containerPort: {{ .Values.port }}
+          env:
+            - name: POSTGRESQL_URI
+              value: postgresql://postgres:HwLjy7vJ7l80DESr@exam-perntodo-ethan-env.cba6rpvi5fmd.us-east-1.rds.amazonaws.com:5432/perntodo
+
