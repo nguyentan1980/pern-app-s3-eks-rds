@@ -9,7 +9,7 @@ const ListTodos = () => {
 
   const deleteTodo = async id => {
     try {
-      const deleteTodo = await fetch(`http://k8s-default-perntodo-dda23c25a0-1174072691.us-east-1.elb.amazonaws.com/todos/${id}`, {
+      const deleteTodo = await fetch(`elb.amazonaws.com/todos/${id}`, {
         method: "DELETE"
       });
 
@@ -21,7 +21,7 @@ const ListTodos = () => {
 
   const getTodos = async () => {
     try {
-      const response = await fetch("http://k8s-default-perntodo-dda23c25a0-1174072691.us-east-1.elb.amazonaws.com/todos");
+      const response = await fetch("elb.amazonaws.com/todos");
       const jsonData = await response.json();
 
       setTodos(jsonData);

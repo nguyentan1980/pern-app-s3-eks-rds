@@ -10,7 +10,7 @@ const EditTodo = ({ todo }) => {
     try {
       const body = { description };
       const response = await fetch(
-        `http://k8s-default-perntodo-dda23c25a0-1174072691.us-east-1.elb.amazonaws.com/todos/${todo.todo_id}`,
+        `elb.amazonaws.com/todos/${todo.todo_id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
