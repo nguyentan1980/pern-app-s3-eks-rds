@@ -18,5 +18,5 @@ spec:
           - containerPort: {{ .Values.port }}
           env:
             - name: POSTGRESQL_URI
-              value: postgresql://postgres:HwLjy7vJ7l80DESr@exam-perntodo-ethan-env.cba6rpvi5fmd.us-east-1.rds.amazonaws.com:5432/perntodo
+              value: db_url
 
