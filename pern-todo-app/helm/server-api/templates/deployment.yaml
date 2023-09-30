@@ -18,5 +18,5 @@ spec:
           - containerPort: {{ .Values.port }}
           env:
             - name: POSTGRESQL_URI
-              value: db_url
+              value: {{ .Values.db_url }}
 
