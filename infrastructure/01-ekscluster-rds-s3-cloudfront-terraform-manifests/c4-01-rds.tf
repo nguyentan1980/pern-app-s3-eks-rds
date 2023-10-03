@@ -11,6 +11,15 @@ resource "random_string" "this" {
   special = false
 }
 
+ resource "aws_secretsmanager_secret" "rds_password" {
+   name = "ethan_devopsexam_db_password"
+ }
+
+ resource "aws_secretsmanager_secret_version" "rds_password" {
+   secret_id     = aws_secretsmanager_secret.rds_password.id
+   secret_string = random_string.this.result
+ }
+
 resource "aws_db_subnet_group" "this" {
   name       = "${var.db_identifier}-${var.env}-subnet-group"
   subnet_ids = module.vpc.private_subnets
@@ -21,6 +30,8 @@ resource "aws_db_subnet_group" "this" {
 }
 
 resource "aws_db_instance" "this" {
+
+  storage_encrypted       = true
   identifier             = "${var.db_identifier}-${var.env}"
   allocated_storage      = 10
   db_name                = var.db_name
@@ -29,7 +40,8 @@ resource "aws_db_instance" "this" {
   availability_zone      = element(module.vpc.azs, 0)
   instance_class         = "db.t3.micro"
   username               = var.db_user
-  password               = random_string.this.result
+  #password               = random_string.this.result
+  password               = aws_secretsmanager_secret_version.rds_password.secret_string
   skip_final_snapshot    = true
   deletion_protection    = false
   db_subnet_group_name   = aws_db_subnet_group.this.name
